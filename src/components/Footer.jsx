@@ -8,7 +8,7 @@ const Footer = () => {
             {/* -----------------------Left Section---------------------- */}
             <div>
                 <img className='mb-5 w-40' src={assets.logo} alt="" />
-                <p className='w-full md:w-2/3 text-gray-600 leading-6'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <p className='w-full md:w-2/3 text-gray-600 leading-6'>RM Care service enables patients to search for top doctors and book confirmed appointments. Whether it is a second opinion or a follow up question, why visit the doctor, when you can check with them online? </p>
             </div>
 
             {/* -----------------------Center Section---------------------- */}
@@ -33,7 +33,7 @@ const Footer = () => {
         </div>
         <div>
             {/* --------------------------Copyright text---------------- */}
-            <p className='py-5 text-sm text-center'>Copyright © 2024 Raman - All Right Reserved.</p>
+            <p className='py-5 text-sm text-center'>Copyright © 2024, Raman - All Right Reserved.</p>
         </div>
     </div>
   )
