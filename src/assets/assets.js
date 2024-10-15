@@ -88,7 +88,7 @@ export const specialityData = [
 export const doctors = [
     {
         _id: 'doc1',
-        name: 'Dr. Richard James',
+        name: 'Dr. Harsh',
         image: doc1,
         speciality: 'General physician',
         degree: 'MBBS',
@@ -103,9 +103,9 @@ export const doctors = [
     },
     {
         _id: 'doc2',
-        name: 'Dr. Emily Larson',
+        name: 'Dr. Hasan Gazi',
         image: doc2,
-        speciality: 'Gynecologist',
+        speciality: 'Gastroenterologist',
         degree: 'MBBS',
         experience: '3 Years',
         about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
@@ -118,7 +118,7 @@ export const doctors = [
     },
     {
         _id: 'doc3',
-        name: 'Dr. Sarah Patel',
+        name: 'Dr. Shubham Sharma',
         image: doc3,
         speciality: 'Dermatologist',
         degree: 'MBBS',
@@ -133,7 +133,7 @@ export const doctors = [
     },
     {
         _id: 'doc4',
-        name: 'Dr. Christopher Lee',
+        name: 'Dr. Vasant Kumar',
         image: doc4,
         speciality: 'Pediatricians',
         degree: 'MBBS',
@@ -148,23 +148,8 @@ export const doctors = [
     },
     {
         _id: 'doc5',
-        name: 'Dr. Jennifer Garcia',
+        name: 'Dr. Anchal Mor',
         image: doc5,
-        speciality: 'Neurologist',
-        degree: 'MBBS',
-        experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
-        isAvailable: false,
-        address: {
-            line1: '57th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
-        }
-    },
-    {
-        _id: 'doc6',
-        name: 'Dr. Andrew Williams',
-        image: doc6,
         speciality: 'Neurologist',
         degree: 'MBBS',
         experience: '4 Years',
@@ -177,8 +162,23 @@ export const doctors = [
         }
     },
     {
+        _id: 'doc6',
+        name: 'Dr. Abhiskek Raj',
+        image: doc6,
+        speciality: 'Neurologist',
+        degree: 'MBBS',
+        experience: '4 Years',
+        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        fees: 50,
+        isAvailable: false,
+        address: {
+            line1: '57th Cross, Richmond',
+            line2: 'Circle, Ring Road, London'
+        }
+    },
+    {
         _id: 'doc7',
-        name: 'Dr. Christopher Davis',
+        name: 'Dr. Tanmay Pandey',
         image: doc7,
         speciality: 'General physician',
         degree: 'MBBS',
@@ -193,7 +193,7 @@ export const doctors = [
     },
     {
         _id: 'doc8',
-        name: 'Dr. Timothy White',
+        name: 'Dr. Amar Singh',
         image: doc8,
         speciality: 'Gynecologist',
         degree: 'MBBS',
@@ -208,7 +208,7 @@ export const doctors = [
     },
     {
         _id: 'doc9',
-        name: 'Dr. Ava Mitchell',
+        name: 'Dr. Tanvi Dubey',
         image: doc9,
         speciality: 'Dermatologist',
         degree: 'MBBS',
@@ -223,7 +223,7 @@ export const doctors = [
     },
     {
         _id: 'doc10',
-        name: 'Dr. Jeffrey King',
+        name: 'Dr. Raman Kumar',
         image: doc10,
         speciality: 'Pediatricians',
         degree: 'MBBS',
@@ -238,7 +238,7 @@ export const doctors = [
     },
     {
         _id: 'doc11',
-        name: 'Dr. Zoe Kelly',
+        name: 'Dr. Subhash',
         image: doc11,
         speciality: 'Neurologist',
         degree: 'MBBS',
