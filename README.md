@@ -19,6 +19,8 @@ Server Modules : express, mongoose, multer, bcrypt, cloudinary, cors, dotenv, js
 Frontend Modules
 axios, react-router-dom, react-toastify
 
+* Added Payment gateway of razor pay
+
 Updates will be updated during the on going process.
 
 -Raman Kumar Manjhi
