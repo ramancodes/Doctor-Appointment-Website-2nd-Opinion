@@ -14,7 +14,7 @@ Currently Used (17-11-2024):
 
 
 Backend Modules
-Server Modules : express, mongoose, multer, bcrypt, cloudinary, cors, dotenv, jsonwebtoken, nodemon, validator, axios
+Server Modules : express, mongoose, multer, bcrypt, cloudinary, cors, dotenv, jsonwebtoken, nodemon, validator, axios, razorpay
 
 Frontend Modules
 axios, react-router-dom, react-toastify
