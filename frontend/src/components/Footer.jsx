@@ -33,6 +33,7 @@ const Footer = () => {
                     <li>{phone}</li>
                     <li>{email}</li>
                     <li>{officeAddress}</li>
+                    <li onClick={()=>{navigate('/about-developer'); scrollTo(0,0) }} className='cursor-pointer'>About Developer</li>
                 </ul>
             </div>
         </div>
