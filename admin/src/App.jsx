@@ -28,7 +28,17 @@ const App = () => {
       <div className='flex items-start'>
         <Sidebar/>
         <Routes>
-          <Route path='/' element={<></>} />
+          <Route path='/' element={
+            <div className='flex flex-col items-center text-center'>
+              <div className='m-10 text-8xl text-gray-600'>
+                <p>Welcome to <span className='text-primary'>{aToken ? 'Admin' : 'Doctor'}</span> Panel </p>
+              </div>
+              <div className='m-10 text-sm text-gray-400'>
+                <p>Developed By Raman Kumar Manjhi</p>
+                <p>Copyright © 2024, Raman - All Right Reserved.</p>
+              </div>
+            </div>
+          } />
           {/* Admin Routes */}
           <Route path='/admin-dashboard' element={<Dashboard />} />
           <Route path='/all-appointments' element={<AllApointments />} />

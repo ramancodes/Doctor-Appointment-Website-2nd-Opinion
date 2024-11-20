@@ -3,16 +3,19 @@ import { AppContext } from '../context/AppContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { assets } from '../assets/assets'
 
 const Login = () => {
 
   const {backendUrl, token, setToken} = useContext(AppContext)
   const navigate = useNavigate()
 
-  const [state, setState] = useState('Sign Up')
+  const [state, setState] = useState('Login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
+
+  const [showInfo, setShowInfo] = useState(false)
 
   const onSubmitHandler = async (event)=>{
     event.preventDefault()
@@ -66,7 +69,11 @@ const Login = () => {
           <input className='border border-zinc-300 rounded w-full p-2 mt-1' type="text" onChange={(e)=>setEmail(e.target.value)} value={email} required />
         </div>
         <div className='w-full'>
-          <p>Password</p>
+          <div className='flex py-1'>
+            <p>Password</p>
+            {state === 'Sign Up' && <img onClick={()=>setShowInfo(!showInfo)} className='ml-2' src={assets.info_icon} alt="" />} 
+            { showInfo && <p className='items-center text-xs text-gray-400 px-2'>Enter Strong Password</p>}
+          </div>
           <input className='border border-zinc-300 rounded w-full p-2 mt-1' type="password" onChange={(e)=>setPassword(e.target.value)} value={password} required />
         </div>
         <button type='submit' className='bg-primary text-white w-full py-2 rounded-md text-base'>{state === 'Sign Up' ? 'Create Account' : 'Login'}</button>

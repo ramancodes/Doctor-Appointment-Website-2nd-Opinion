@@ -3,9 +3,9 @@ import { assets } from '../../assets/assets'
 import { AdminContext } from '../../context/AdminContext'
 import {toast} from 'react-toastify'
 import axios from 'axios'
+import { Password } from 'primereact/password'
 
 const AddDoctor = () => {
-
 
   const [docImg, setDocImg] = useState(false)
   const [name, setName] = useState('')
@@ -18,6 +18,9 @@ const AddDoctor = () => {
   const [degree, setDegree] = useState('')
   const [address1, setAddress1] = useState('')
   const [address2, setAddress2] = useState('')
+
+  const [showInfo, setShowInfo] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const { backendUrl, aToken } = useContext(AdminContext)
 
@@ -99,8 +102,22 @@ const AddDoctor = () => {
             </div>
 
             <div className='flex-1 flex flex-col gap-1'>
-              <p>Doctor Password</p>
-              <input onChange={(e)=>setPassword(e.target.value)} value={password} className='border rounded px-3 py-2' type="password" placeholder='Password' required />
+              <div className='flex'>
+                <p>Doctor Password</p> 
+                <img onClick={()=>setShowInfo(!showInfo)} className='ml-2' src={assets.info_icon} alt="" /> 
+                { showInfo && <p className='items-center text-xs text-gray-400 px-2 py-1'>Enter Strong Password</p>}
+
+                  {/* { 
+                    !showPassword
+                      ? <img src={assets.show_password_icon} onClick={()=>setShowPassword(true)} className='px-2 py-1' alt="" />
+                      : <img src={assets.hide_password_icon} onClick={()=>setShowPassword(false)} alt="" />
+                  } */}
+
+              </div>
+                <input className='border px-3 py-2 rounded' type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder='Password' required />
+              <div className='flex justify-between'>
+                
+              </div>
             </div>
 
             <div className='flex-1 flex flex-col gap-1'>
