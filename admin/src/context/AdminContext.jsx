@@ -10,15 +10,46 @@ const AdminContextProvider = (props) => {
     const [doctors, setDoctors] = useState([])
     const [appointments, setAppointments] = useState([])
     const [dashData, setDashData] = useState(false)
+    const [users, setUsers] = useState([])
+    const [departments, setDepartments] = useState([])
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+    const getAllDepartments = async ()=>{
+        try {
+            const {data} = await axios.post(backendUrl+'/api/admin/all-departments', {}, {headers:{aToken}})
+            if(data.success){
+                setDepartments(data.departments)
+                console.log(data.departments)
+            }else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    const getAllUsers = async ()=>{
+        try {
+            const {data} = await axios.post(backendUrl+'/api/admin/all-users', {}, {headers:{aToken}})
+            if(data.success){
+                setUsers(data.users)
+                // console.log(data.users)
+                
+            }else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
 
     const getAllDoctors = async ()=>{
         try{
             const {data} = await axios.post(backendUrl+'/api/admin/all-doctors', {}, {headers:{aToken}})
             if(data.success){
                 setDoctors(data.doctors)
-                // console.log(data.doctors);
+                console.log(data.doctors)
                 
             }else{
                 toast.error(data.message)
@@ -92,6 +123,52 @@ const AdminContextProvider = (props) => {
         }
     }
 
+    const removeUser = async (userId)=>{
+        try {
+
+            const {data} = await axios.post(backendUrl+'/api/admin/delete-user', {userId}, {headers:{aToken}})
+            if(data.success){
+                toast.success(data.message)
+                getAllUsers()
+            } else {
+                toast.error(data.message)
+            }
+            
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    const removeDoctor = async (docId)=>{
+        try {
+
+            const {data} = await axios.post(backendUrl+'/api/admin/delete-doctor', {docId}, {headers:{aToken}})
+            if(data.success){
+                toast.success(data.message)
+                getAllDoctors()
+            } else {
+                toast.error(data.message)
+            }
+            
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    const removeDepartment = async(depId)=>{
+        try {
+            const {data} = await axios.post(backendUrl+'/api/admin/delete-department', {depId}, {headers:{aToken}})
+            if(data.success){
+                toast.success(data.message)
+                getAllDepartments()
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     const value = {
         aToken,
         setAToken,
@@ -101,7 +178,14 @@ const AdminContextProvider = (props) => {
         appointments, setAppointments,
         getAllAppointments,
         cancelAppointment,
-        dashData, getDashData
+        dashData, getDashData,
+        users, setUsers,
+        getAllUsers,
+        removeUser,
+        removeDoctor,
+        departments, setDepartments,
+        getAllDepartments,
+        removeDepartment
     }
 
 

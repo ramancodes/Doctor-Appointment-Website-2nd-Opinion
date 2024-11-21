@@ -5,6 +5,7 @@ import doctorModel from '../models/doctorModel.js'
 import jwt from 'jsonwebtoken'
 import appointmentModel from '../models/appointmentModel.js'
 import userModel from '../models/userModel.js'
+import departmentModel from '../models/departmentModel.js'
 
 
 const isStrongPassword = (password)=>{
@@ -108,6 +109,17 @@ const allDoctors = async (req, res)=>{
     }
 }
 
+// API to get all users
+const allUsers = async (req, res)=>{
+    try {
+        const users = await userModel.find({}).select('-password')
+        res.json({success:true, users})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
 // API to get all appointment list
 const appointmentsAdmin = async (req, res)=>{
     try {
@@ -165,4 +177,102 @@ const adminDashboard = async (req, res)=>{
     }
 }
 
-export {addDoctor, loginAdmin, allDoctors, appointmentsAdmin, cancelAppointmentAdmin, adminDashboard}
+// API to remove user
+const removeUser = async (req, res)=>{
+    try {
+
+        const { userId } = req.body
+        await userModel.deleteOne({email:userId})
+
+        res.json({success:true, message:"Deleted Successfully"})
+        
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+// API to remove doctor
+const removeDoctor = async (req, res)=>{
+    try {
+        const { docId } = req.body
+        await doctorModel.deleteOne({email:docId})
+
+        res.json({success:true, message:"Deleted Successfully"})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+// API to get all the departments
+const addDepartment = async (req, res)=>{
+    try {
+
+        const {speciality} = req.body
+        const imageFile = req.file
+        
+        // checking for all data to add doctor
+        if(!speciality){
+            return res.json({success:false, message:"Missing Details"})
+        }
+
+        // upload image to cloudnary
+        const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resourse_type:"image"})
+        const imageUrl = imageUpload.secure_url
+
+        // addd to database
+        const doctorData = {
+            image:imageUrl,
+            speciality
+        }
+
+        const newDepartment = new departmentModel(doctorData)
+        await newDepartment.save()
+
+        res.json({success:true, message:"New Department Added"})
+        
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+// API to get all departments
+const allDepartments = async (req, res)=>{
+    try {
+        const departments = await departmentModel.find({})
+        res.json({success:true, departments})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+// API to delete department
+const removeDepartment = async (req, res)=>{
+    try {
+        const { depId } = req.body
+        await departmentModel.deleteOne({speciality:depId})
+
+        res.json({success:true, message:"Deleted Successfully"})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+export {
+    addDoctor, 
+    loginAdmin, 
+    allDoctors, 
+    appointmentsAdmin, 
+    cancelAppointmentAdmin, 
+    adminDashboard, 
+    allUsers,
+    removeUser,
+    removeDoctor,
+    addDepartment,
+    allDepartments,
+    removeDepartment
+}

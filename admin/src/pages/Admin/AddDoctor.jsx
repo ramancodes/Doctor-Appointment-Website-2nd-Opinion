@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { AdminContext } from '../../context/AdminContext'
 import {toast} from 'react-toastify'
 import axios from 'axios'
-import { Password } from 'primereact/password'
 
 const AddDoctor = () => {
 
@@ -20,9 +19,9 @@ const AddDoctor = () => {
   const [address2, setAddress2] = useState('')
 
   const [showInfo, setShowInfo] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
+  // const [showPassword, setShowPassword] = useState(false)
 
-  const { backendUrl, aToken } = useContext(AdminContext)
+  const { backendUrl, aToken, getAllDepartments, departments} = useContext(AdminContext)
 
   const onSubmitHandler = async (event)=>{
     event.preventDefault()
@@ -72,6 +71,12 @@ const AddDoctor = () => {
       console.log(error);
     }
   }
+
+  useEffect(()=>{
+    if(aToken){
+      getAllDepartments()
+    }
+  },[aToken])
 
   return (
     <form className='m-5 w-full' onSubmit={onSubmitHandler}>
@@ -148,13 +153,9 @@ const AddDoctor = () => {
             <div className='flex-1 flex flex-col gap-1'>
               <p>Speciality</p>
               <select onChange={(e)=>setSpeciality(e.target.value)} value={speciality} className='border rounded px-3 py-2' name="" id="">
-                <option value="General physician">General physician</option>
-                <option value="Gynecologist">Gynecologist</option>
-                <option value="Dermatologist">Dermatologist</option>
-                <option value="Pediatricians">Pediatricians</option>
-                <option value="Neurologist">Neurologist</option>
-                <option value="Gastroenterologist">Gastroenterologist</option>
-                <option value="Gastroenterologist">Psychologist</option>
+              {departments.map((item, index)=>(
+                <option value={item.speciality}>{item.speciality}</option>
+              ))}
               </select>
             </div>
 

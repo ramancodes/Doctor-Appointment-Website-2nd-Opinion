@@ -15,6 +15,8 @@ import DoctorDashboard from './pages/Doctor/DoctorDashboard.jsx';
 import DoctorAppointment from './pages/Doctor/DoctorAppointment.jsx';
 import DoctorProfile from './pages/Doctor/DoctorProfile.jsx';
 import DoctorReports from './pages/Doctor/DoctorReports.jsx';
+import UserList from './pages/Admin/UserList.jsx';
+import Departments from './pages/Admin/Departments.jsx';
 
 const App = () => {
 
@@ -44,6 +46,8 @@ const App = () => {
           <Route path='/all-appointments' element={<AllApointments />} />
           <Route path='/add-doctor' element={<AddDoctor />} />
           <Route path='/doctor-list' element={<DoctorsList />} />
+          <Route path='/all-users' element={<UserList />} />
+          <Route path='/departments' element={<Departments />} />
 
           {/* Doctor Routes */}
           <Route path='/doctor-dashboard' element={<DoctorDashboard />} />

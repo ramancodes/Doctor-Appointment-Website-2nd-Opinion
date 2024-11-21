@@ -6,6 +6,7 @@ import {v2 as cloudinary} from 'cloudinary'
 import doctorModel from '../models/doctorModel.js';
 import appointmentModel from '../models/appointmentModel.js';
 import razorpay from 'razorpay'
+import departmentModel from '../models/departmentModel.js';
 
 const isStrongPassword = (password)=>{
     // Regular expressions for each condition
@@ -85,6 +86,17 @@ const loginUser = async (req, res)=>{
             res.json({success:false, message:"Invalid Credentials"})
         }
 
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+// API to get all departments
+const allDepartments = async (req, res)=>{
+    try {
+        const departments = await departmentModel.find({})
+        res.json({success:true, departments})
     } catch (error) {
         console.log(error);
         res.json({success:false, message:error.message})
@@ -283,4 +295,15 @@ const verifyRazorpay = async (req, res)=>{
     }
 }
 
-export {registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment, paymentRazorpay, verifyRazorpay}
+export {
+    registerUser, 
+    loginUser, 
+    getProfile, 
+    updateProfile, 
+    bookAppointment, 
+    listAppointment, 
+    cancelAppointment, 
+    paymentRazorpay, 
+    verifyRazorpay,
+    allDepartments
+}

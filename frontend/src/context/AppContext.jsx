@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { specialityData } from "../assets/assets";
 import axios from 'axios'
 import { toast } from "react-toastify";
 
@@ -14,8 +13,9 @@ const AppContextProvider = (props)=>{
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     const [doctors, setDoctors] = useState([])
-    const [token, setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):false)
+    const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false)
     const [userData, setUserData] = useState(false)
+    const [departments, setDepartments] = useState([])
 
     const getDoctorsData = async ()=>{
         try{
@@ -27,6 +27,21 @@ const AppContextProvider = (props)=>{
                 toast.error(data.message)
             }
         }catch(error){
+            console.log(error);
+            toast.error(error.message)
+        }
+    }
+
+    const getAllDepartments = async ()=>{
+        try {
+            const {data} = await axios.get(backendUrl+'/api/user/all-departments')
+            if(data.success){
+                setDepartments(data.departments)
+            }
+            else{
+                toast.error(data.message)
+            }
+        } catch (error) {
             console.log(error);
             toast.error(error.message)
         }
@@ -51,13 +66,18 @@ const AppContextProvider = (props)=>{
     const value = {
         doctors, getDoctorsData,
         currencySymbol,
-        specialityData,
         phone, email, officeAddress,
         backendUrl,
         token, setToken, 
         userData, setUserData,
         loadUserProfileData,
+        departments, setDepartments,
+        getAllDepartments
     }
+
+    useEffect(()=>{
+        getAllDepartments()
+    },[])
 
     useEffect(()=>{
         getDoctorsData()

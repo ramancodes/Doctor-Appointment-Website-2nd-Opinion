@@ -101,6 +101,7 @@ const MyProfile = () => {
             ? <select className='max-w-20 bg-gray-100 ' onChange={(e)=>setUserData(prev => ({...prev, gender:e.target.value}))} value={userData.gender}>
               <option value="Male">Male</option>t
               <option value="Female">Female</option>
+              <option value="Female">Other</option>
             </select>
             : <p className='text-gray-400'>{userData.gender}</p>
           }
