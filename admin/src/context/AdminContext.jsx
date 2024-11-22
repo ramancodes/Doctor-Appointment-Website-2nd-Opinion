@@ -169,6 +169,28 @@ const AdminContextProvider = (props) => {
         }
     }
 
+    const removeSymptom = async(dep, symptom)=>{
+        try {
+            const formData = {
+                dep: dep,
+                symptom: symptom
+            }
+
+            const {data} = await axios.post(backendUrl+'/api/admin/delete-symptom', formData, {headers:{aToken}})
+            
+            if(data.success){
+                toast.success(data.message)
+                getAllDepartments()
+            } else {
+                toast.error(data.message)
+            }
+
+        } catch (error) {
+            toast.error(error.message)
+        }
+
+    }
+
     const value = {
         aToken,
         setAToken,
@@ -185,7 +207,8 @@ const AdminContextProvider = (props) => {
         removeDoctor,
         departments, setDepartments,
         getAllDepartments,
-        removeDepartment
+        removeDepartment,
+        removeSymptom
     }
 
 

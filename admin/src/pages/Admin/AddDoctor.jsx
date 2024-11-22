@@ -154,7 +154,7 @@ const AddDoctor = () => {
               <p>Speciality</p>
               <select onChange={(e)=>setSpeciality(e.target.value)} value={speciality} className='border rounded px-3 py-2' name="" id="">
               {departments.map((item, index)=>(
-                <option value={item.speciality}>{item.speciality}</option>
+                <option key={index} value={item.speciality}>{item.speciality}</option>
               ))}
               </select>
             </div>

@@ -214,7 +214,7 @@ const addDepartment = async (req, res)=>{
         const {speciality} = req.body
         const imageFile = req.file
         
-        // checking for all data to add doctor
+        // checking for all data to add department
         if(!speciality){
             return res.json({success:false, message:"Missing Details"})
         }
@@ -224,12 +224,12 @@ const addDepartment = async (req, res)=>{
         const imageUrl = imageUpload.secure_url
 
         // addd to database
-        const doctorData = {
+        const departmentData = {
             image:imageUrl,
-            speciality
+            speciality,
         }
 
-        const newDepartment = new departmentModel(doctorData)
+        const newDepartment = new departmentModel(departmentData)
         await newDepartment.save()
 
         res.json({success:true, message:"New Department Added"})
@@ -264,6 +264,91 @@ const removeDepartment = async (req, res)=>{
     }
 }
 
+// API to add symptopms to department
+const addSymptom = async (req, res)=>{
+    try {
+        const {dep, symptom} = req.body
+        // console.log(dep, symptom);
+        
+        // checking for all data to add symptom
+        if(!symptom){
+            return res.json({success:false, message:"Missing Details"})
+        }
+
+        const data = await departmentModel.find({speciality: dep})
+        // console.log(data);
+        
+        // Checking if symptom already added
+        const depId = data[0]._id
+        let symptoms = data[0].symptoms
+        // console.log(depId, symptoms);
+
+        if(symptoms){
+            if(symptoms.includes(symptom)){
+                return res.json({success:false, message:"Symptom already available"})
+            } else {
+                symptoms.push(symptom)
+            }
+        } else {
+            symptoms.push(symptom)
+        }
+
+        await departmentModel.findByIdAndUpdate(depId, {symptoms})
+
+        res.json({success:true, message:"Symptom Added"})
+
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+// API to get symptoms from department
+const getSymptoms = async (req, res)=>{
+    try {
+        const {depId} = req.body
+
+        const data = await departmentModel.findById(depId)
+        let symptoms = data.symptoms
+        if(symptoms){
+            res.json({success:true, symptoms})
+        } else {
+            res.json({success:false, message:"No Symptoms Available"})
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+
+}
+
+// API to remove symptoms
+const removeSymptom = async (req, res)=>{
+    try {
+        const {dep, symptom} = req.body
+        // console.log(dep, symptom)
+
+        const data = await departmentModel.find({speciality: dep})
+        // console.log(data);
+        
+        // Checking if symptom already added
+        const depId = data[0]._id
+        let symptoms = data[0].symptoms
+        // console.log(depId, symptoms);
+
+        symptoms = symptoms.filter(e => e!==symptom)
+
+        await departmentModel.findByIdAndUpdate(depId, {symptoms})
+
+        res.json({success:true, message:"Symptom Deleted"})
+
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
 export {
     addDoctor, 
     loginAdmin, 
@@ -276,5 +361,8 @@ export {
     removeDoctor,
     addDepartment,
     allDepartments,
-    removeDepartment
+    removeDepartment,
+    addSymptom,
+    getSymptoms,
+    removeSymptom
 }
