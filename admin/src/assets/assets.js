@@ -18,6 +18,7 @@ import hide_password_icon from './hide_password.svg'
 import users_icon from './users.svg'
 import department_icon from './departments.svg'
 import doctors_icon from './doctors.svg'
+import deppartment_dash_icon from './department_dash_icon.svg'
 
 export const assets = {
     add_icon,
@@ -39,5 +40,6 @@ export const assets = {
     hide_password_icon,
     users_icon,
     department_icon,
-    doctors_icon
+    doctors_icon,
+    deppartment_dash_icon
 }

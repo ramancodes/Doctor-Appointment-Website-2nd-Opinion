@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
-import {assets} from '../assets/assets'
 import { AppContext } from '../context/AppContext'
 import { useNavigate } from 'react-router-dom'
 
 const Contact = () => {
+  const contact_image = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732230233/contact_image_pc94an.png'
+
   const {phone, email, officeAddress} = useContext(AppContext)
   const navigate = useNavigate()
   return (
@@ -13,7 +14,7 @@ const Contact = () => {
         </div>
 
         <div className='my-10 flex flex-col justify-center md:flex-row gap-10 mb-28 text-sm'>
-          <img className='w-full md:max-w-[360px]' src={assets.contact_image} alt="" />
+          <img className='w-full md:max-w-[360px]' src={contact_image} alt="" />
 
           <div className='flex flex-col justify-center items-start gap-6'>
             <p className='font-semibold text-lg text-gray-600'>Our OFFICE</p>

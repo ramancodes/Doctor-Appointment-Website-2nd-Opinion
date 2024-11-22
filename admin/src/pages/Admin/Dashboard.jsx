@@ -47,6 +47,16 @@ const Dashboard = () => {
             </div>
           </div>
 
+          <div onClick={()=>navigate('/departments')} className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
+            <div className='w-14 bg-[#F6F8FF] flex items-center justify-center rounded py-2'>
+              <img className='w-10' src={assets.deppartment_dash_icon} alt="" />
+            </div>
+            <div>
+              <p className='text-xl font-semibold text-gray-600'>{dashData.departments}</p>
+              <p className='text-gray-400'>Departments</p>
+            </div>
+          </div>
+
         </div>
 
         <div className='bg-white'>

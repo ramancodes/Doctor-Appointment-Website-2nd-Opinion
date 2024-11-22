@@ -1,8 +1,9 @@
 import React from 'react'
-import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 
 const Banner = () => {
+
+    const appointment_img = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732230233/appointment_img_eryqsz.png'
 
     const navigate = useNavigate()
 
@@ -19,7 +20,7 @@ const Banner = () => {
 
         {/* -------------------------Right Side ----------------------- */}
         <div className='hidden md:block md:w-1/2 lg:w-[370px] relative'>
-            <img className='w-full absolute bottom-0 right-0 max-w-md' src={assets.appointment_img} alt="" />
+            <img className='w-full absolute bottom-0 right-0 max-w-md' src={appointment_img} alt="" />
         </div>
     </div>
   )

@@ -50,7 +50,7 @@ const Departments = () => {
     <div className='m-5 w-full'>
         {/* Add New Department */}
         <p className='mb-3 text-lg font-medium'>Add New Department</p>
-        <form onSubmit={addDepartment} className='border border-gray-2 rounded bg-white mr-8'>
+        <form onSubmit={addDepartment} className='border border-gray-2 rounded bg-white mr-10'>
 
             <div className='flex m-5 gap-4 justify-between items-center'>
                 <div className='flex items-center gap-4 text-gray-500 px-4'>
@@ -71,16 +71,23 @@ const Departments = () => {
         </form>
 
         {/* All departments */}
-        <p className='mt-3 mb-3 text-lg font-medium'>Departments</p>
-        <div className='w-full flex flex-wrap gap-4 pt-5 gap-y-6'>
+        <p className='mt-3 mb-4 text-lg font-medium'>Departments</p>
+
+        <div className='bg-white border rounded text-sm max-h-[80vh] min-h-[60vh] overflow-y-scroll mr-10'>
+          <div className='hidden sm:grid grid-cols-[0.5fr_2fr_2fr] grid-flow-col py-3 px-6 border-b'>
+            <p>#</p>
+            <p>Department</p>
+            <p>Action</p>
+          </div>
           {
             departments.map((item, index)=>(
-              <div className='flex flex-col justify-center border border-indigo-200 rounded-xl max-w-40 overflow-hidden cursor-pointer group' key={index}>
-                <img className='bg-indigo-50 group-hover:bg-primary transition-all duration-500 px-2 py-2' src={item.image} alt="" />
-                <div className='p-4'>
-                  <p className='text-neutral-800 text-sm font-medium text-center'>{item.speciality}</p>
-                  <button onClick={()=>removeDepartment(item.speciality)} className='text-neutral-800 w-full px-8 py-2 mt-4 border border-gray-2 rounded-full hover:bg-red-600 hover:text-white transition-all'>Remove</button>
+              <div key={index} className='flex flex-wrap justify-between max-sm:gap-2 sm:grid sm:grid-cols-[0.5fr_2fr_2fr] items-center text-gray-500 py-3 px-6 border-b hover:bg-gray-50'>
+                <p className='max-sm:hidden'>{index+1}</p>
+                <div className='flex items-center gap-2'>
+                  <img className='w-8 rounded-full bg-gray-200' src={item.image} alt="" /> <p>{item.speciality}</p>
                 </div>
+                <button onClick={()=>removeDepartment(item.speciality)} className='w-44 text-neutral-800 px-8 py-2 mt-4 border border-gray-2 rounded-full hover:bg-red-600 hover:text-white transition-all'>Remove</button>
+                
               </div>
             ))
           }

@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
-import { assets } from '../assets/assets'
 import RelatedDoctors from '../components/RelatedDoctors'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 
 const Appointment = () => {
+
+  const info_icon = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732232006/info_icon_u0zxmb.svg'
+  const verified_icon = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732232006/verified_icon_iufzdv.svg'
 
   const {docId} = useParams()
   const {doctors, currencySymbol, backendUrl, token, getDoctorsData} = useContext(AppContext)
@@ -133,7 +135,7 @@ const Appointment = () => {
             {/* ----------------- Doc Info : name, degree, exp ------------------------ */}
             <p className='flex items-center gap-2 text-2xl font-medium text-gray-900'>
               {docInfo.name} 
-              <img className='w-5' src={assets.verified_icon} alt="" />
+              <img className='w-5' src={verified_icon} alt="" />
               </p>
 
               <div className='flex items-center gap-2 text-sm mt-1 text-gray-600'>
@@ -144,7 +146,7 @@ const Appointment = () => {
               {/* ------------------------About Doctor -------------------------*/}
               <div>
                 <p className='flex items-center gap-2 text-sm font-medium text-gray-900 mt-3'>
-                  About <img src={assets.info_icon} alt="" />
+                  About <img src={info_icon} alt="" />
                   </p>
                 <p className='text-sm text-gray-500 max-w-[700px] mt-1'>{docInfo.about}</p>
               </div>

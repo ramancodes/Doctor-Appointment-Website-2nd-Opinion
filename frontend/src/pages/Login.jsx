@@ -3,9 +3,10 @@ import { AppContext } from '../context/AppContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import { assets } from '../assets/assets'
 
 const Login = () => {
+
+  const info_icon = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732232006/info_icon_u0zxmb.svg'
 
   const {backendUrl, token, setToken} = useContext(AppContext)
   const navigate = useNavigate()
@@ -71,7 +72,7 @@ const Login = () => {
         <div className='w-full'>
           <div className='flex py-1'>
             <p>Password</p>
-            {state === 'Sign Up' && <img onClick={()=>setShowInfo(!showInfo)} className='ml-2' src={assets.info_icon} alt="" />} 
+            {state === 'Sign Up' && <img onClick={()=>setShowInfo(!showInfo)} className='ml-2' src={info_icon} alt="" />} 
             { showInfo && <p className='items-center text-xs text-gray-400 px-2'>Enter Strong Password</p>}
           </div>
           <input className='border border-zinc-300 rounded w-full p-2 mt-1' type="password" onChange={(e)=>setPassword(e.target.value)} value={password} required />

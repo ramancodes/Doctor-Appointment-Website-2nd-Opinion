@@ -161,11 +161,13 @@ const adminDashboard = async (req, res)=>{
         const doctors = await doctorModel.find({})
         const users = await userModel.find({})
         const appointments = await appointmentModel.find({})
+        const departments = await departmentModel.find({})
 
         const dashData = {
             doctors: doctors.length,
             appointments: appointments.length,
             patients: users.length,
+            departments: departments.length,
             latestAppointments: appointments.reverse().slice(0, 5)
         }
 

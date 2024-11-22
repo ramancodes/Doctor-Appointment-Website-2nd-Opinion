@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { AppContext } from '../context/AppContext'
-import { assets } from '../assets/assets'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const MyProfile = () => {
+
+  const upload_icon = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732232254/upload_icon_auxgug.svg'
 
   const {userData, setUserData, token, backendUrl, loadUserProfileData} = useContext(AppContext)
 
@@ -47,7 +48,7 @@ const MyProfile = () => {
         ? <label htmlFor="image">
           <div className='inline-block relative cursor-pointer'>
             <img className='w-36 rounded opacity-75' src={image ? URL.createObjectURL(image):userData.image} alt="" />
-            <img className='w-10 absolute bottom-12 right-12' src={image ? '' : assets.upload_icon} alt="" />
+            <img className='w-10 absolute bottom-12 right-12' src={image ? '' : upload_icon} alt="" />
           </div>
           <input onChange={(e)=>setImage(e.target.files[0])} type="file" id="image" hidden/>
         </label>

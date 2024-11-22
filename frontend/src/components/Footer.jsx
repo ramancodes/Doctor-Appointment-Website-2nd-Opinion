@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext';
 
 const Footer = () => {
+    const logo = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732230244/logo_zeknik.svg'
     const navigate = useNavigate();
     const {phone, email, officeAddress} = useContext(AppContext)
   return (
@@ -11,7 +11,7 @@ const Footer = () => {
         <div className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm'>
             {/* -----------------------Left Section---------------------- */}
             <div>
-                <img onClick={()=>navigate('/')} className='mb-5 w-40 cursor-pointer' src={assets.logo} alt="" />
+                <img onClick={()=>navigate('/')} className='mb-5 w-40 cursor-pointer' src={logo} alt="" />
                 <p className='w-full md:w-2/3 text-gray-600 leading-6'>RM Care service enables patients to search for top doctors and book confirmed appointments. Whether it is a second opinion or a follow up question, why visit the doctor, when you can check with them online? </p>
             </div>
 
