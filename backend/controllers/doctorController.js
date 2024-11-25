@@ -76,9 +76,22 @@ const appointmentComplete = async (req, res)=>{
 
         const appointmentData = await appointmentModel.findById(appointmentId)
 
+        const date = new Date()
+
+        let am_pm = 'AM'
+        let hour = date.getHours()
+        if(hour>=12){
+            am_pm = 'PM'
+            hour = hour-12
+        }
+
+        const currentDate = date.getDate()+"_"+(date.getMonth()+1)+"_"+date.getFullYear()
+        const currentTime = hour+":"+date.getMinutes()+" "+am_pm
+        // console.log(currentDate, currentTime);
+
         if(appointmentData && appointmentData.docId === docId){
 
-            await appointmentModel.findByIdAndUpdate(appointmentId, {isCompleted: true})
+            await appointmentModel.findByIdAndUpdate(appointmentId, {isCompleted: true, completedDate: currentDate, completedTime: currentTime})
             return res.json({success:true, message:"Appointment Completed"})
             
         } else {

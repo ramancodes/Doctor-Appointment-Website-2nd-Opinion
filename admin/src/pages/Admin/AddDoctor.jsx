@@ -10,10 +10,10 @@ const AddDoctor = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [experience, setExperience] = useState('1 Year')
+  const [experience, setExperience] = useState('')
   const [fees, setFees] = useState('')
   const [about, setAbout] = useState('')
-  const [speciality, setSpeciality] = useState('General physician')
+  const [speciality, setSpeciality] = useState('')
   const [degree, setDegree] = useState('')
   const [address1, setAddress1] = useState('')
   const [address2, setAddress2] = useState('')
@@ -128,6 +128,7 @@ const AddDoctor = () => {
             <div className='flex-1 flex flex-col gap-1'>
               <p>Experience</p>
               <select onChange={(e)=>setExperience(e.target.value)} value={experience} className='border rounded px-3 py-2' name="" id="">
+                <option value="">Not Selected</option>
                 <option value="1 Year">1 Year</option>
                 <option value="2 Years">2 Years</option>
                 <option value="3 Years">3 Years</option>
@@ -153,6 +154,7 @@ const AddDoctor = () => {
             <div className='flex-1 flex flex-col gap-1'>
               <p>Speciality</p>
               <select onChange={(e)=>setSpeciality(e.target.value)} value={speciality} className='border rounded px-3 py-2' name="" id="">
+              <option value="">Not Selected</option>
               {departments.map((item, index)=>(
                 <option key={index} value={item.speciality}>{item.speciality}</option>
               ))}

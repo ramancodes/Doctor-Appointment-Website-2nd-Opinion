@@ -7,6 +7,8 @@ import doctorModel from '../models/doctorModel.js';
 import appointmentModel from '../models/appointmentModel.js';
 import razorpay from 'razorpay'
 import departmentModel from '../models/departmentModel.js';
+import path from 'path';
+import reportModel from '../models/reportModel.js';
 
 const isStrongPassword = (password)=>{
     // Regular expressions for each condition
@@ -121,7 +123,7 @@ const updateProfile = async (req, res)=>{
     try {
         const { userId, name, phone, address, gender, dob } = req.body
         const imageFile = req.file
-
+        
         if(!name || !phone || !address || !dob || !gender){
             return res.json({success:false, message:"Missing Details"})
         }
@@ -148,6 +150,18 @@ const bookAppointment = async (req, res)=>{
     try {
         
         const {userId, docId, slotDate, slotTime} =  req.body
+
+        const date = new Date()
+
+        let am_pm = 'AM'
+        let hour = date.getHours()
+        if(hour>=12){
+            am_pm = 'PM'
+            hour = hour-12
+        }
+
+        const currentDate = date.getDate()+"_"+(date.getMonth()+1)+"_"+date.getFullYear()
+        const currentTime = hour+":"+date.getMinutes()+" "+am_pm
 
         const docData = await doctorModel.findById(docId).select('-password')
         
@@ -176,6 +190,8 @@ const bookAppointment = async (req, res)=>{
         const appointmentData = {
             userId,
             docId,
+            bookedDate: currentDate,
+            bookedTime: currentTime,
             userData,
             docData,
             amount:docData.fees,
@@ -196,6 +212,82 @@ const bookAppointment = async (req, res)=>{
         console.log(error);
         res.json({success:false, message:error.message})
     }
+}
+
+// API to get 2nd opinion report from user
+const bookSecondOpinionAppointment = async (req, res)=>{
+    try {
+        const { userId, userSymptoms, department } =  req.body
+        const reportFile = req.file
+        // console.log(userId, userSymptoms, department, reportFile);
+        
+
+        if(!department || !userSymptoms){
+            return res.json({success:false, message:"Missing Details"})
+        }
+
+        if(!reportFile){
+            return res.json({success:false, message:"Report Missing"})
+        }
+        
+
+        // checking file size less than 4MB and file type '.pdf'
+        if(reportFile){
+            const fileSizeInKB = (reportFile.size/1024);
+            if(fileSizeInKB>4100){
+                return res.json({success:false, message:"File Size Too Large"})
+            }
+            
+            let fileExtension = path.extname(reportFile.originalname);
+            if(fileExtension!=='.pdf'){
+                return res.json({success:false, message:"Only Pdf Files Accepted"})
+            }
+        }
+
+        let reportUrl;
+
+        if(reportFile){
+            // upload report to cloudinary
+            const reportUpload = await cloudinary.uploader.upload(reportFile.path, {resource_type:'raw'})
+            reportUrl = reportUpload.secure_url
+        }
+        
+
+        const date = new Date()
+
+        let am_pm = 'AM'
+        let hour = date.getHours()
+        if(hour>=12){
+            am_pm = 'PM'
+            hour = hour-12
+        }
+
+        const currentDate = date.getDate()+"_"+(date.getMonth()+1)+"_"+date.getFullYear()
+        const currentTime = hour+":"+date.getMinutes()+" "+am_pm
+
+        const userData = await userModel.findById(userId).select('-password')
+
+        const reportData = {
+            userId,
+            report: reportUrl,
+            userData,
+            speciality: department,
+            symptoms: userSymptoms,
+            appliedDate: currentDate,
+            appliedTime: currentTime,
+            userData,
+            date: Date.now(),
+        }
+
+        const newReportData = new reportModel(reportData)
+        await newReportData.save()
+
+        res.json({success:true, message:"Ticket Raised For Second Appointment"})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+
 }
 
 // API to get user appointments for frontend my-appointment page
@@ -232,6 +324,39 @@ const cancelAppointment = async (req, res)=>{
 
         slots_booked[slotDate] = slots_booked[slotDate].filter(e => e !== slotTime)
         await doctorModel.findByIdAndUpdate(docId, {slots_booked})
+
+        res.json({success:true, message:"Appointment Cancelled"})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+// API to get all the second opinion appointments
+const listSecondOpinioReports = async (req, res)=>{
+    try {
+        const { userId } = req.body
+        const reports = await reportModel.find({userId})
+
+        res.json({success:true, reports})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+// API to cancel second opinion Appointment
+const cancelSecondOpinionReport = async (req, res)=>{
+    try {
+        const { userId, reportId } = req.body
+        const reportData = await reportModel.findById(reportId)
+
+        // verify appointment user
+        if(reportData.userId !== userId){
+            return res.json({success:false, message:"Unauthorized Action"})
+        }
+
+        await reportModel.findByIdAndUpdate(reportId, {cancelled:true})
 
         res.json({success:true, message:"Appointment Cancelled"})
     } catch (error) {
@@ -305,5 +430,8 @@ export {
     cancelAppointment, 
     paymentRazorpay, 
     verifyRazorpay,
-    allDepartments
+    allDepartments,
+    bookSecondOpinionAppointment,
+    listSecondOpinioReports,
+    cancelSecondOpinionReport
 }

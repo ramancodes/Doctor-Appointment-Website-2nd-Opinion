@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom'
 
 const MyAppointments = () => {
 
-  const {backendUrl, token, getDoctorsData} = useContext(AppContext)
+  const {backendUrl, token, getDoctorsData, currencySymbol} = useContext(AppContext)
 
   const [appointments, setAppointments] = useState([])
   
@@ -110,13 +110,24 @@ const MyAppointments = () => {
               <div>
                 <img className='w-32 bg-indigo-50' src={item.docData.image} alt="" />
               </div>
-              <div className='flex-1 text-sm text-zinc-600'>
-                <p className='text-neutral-800 font-semibold '>{item.docData.name}</p>
-                <p>{item.docData.speciality}</p>
-                <p className='text-zinc-700 font-medium mt-1 '>Address:</p>
-                <p className='text-xs'>{item.docData.address.line1}</p>
-                <p className='text-xs'>{item.docData.address.line2}</p>
-                <p className='text-xs mt-1'><span className='text-sm font-medium text-neutral-700'>Date & Time:</span> {slotDateFormat(item.slotDate)} | {item.slotTime} </p>
+              <div className='flex gap-2 w-full items-start'>
+                <div className='flex-1 text-sm text-zinc-600'>
+                  <p className='text-neutral-800 font-semibold'>{item.docData.name}</p>
+                  <p>{item.docData.speciality}</p>
+                  <p className='text-zinc-700 font-medium mt-1 '>Address:</p>
+                  <p className='text-xs'>{item.docData.address.line1}</p>
+                  <p className='text-xs'>{item.docData.address.line2}</p>
+                  <p className='text-zinc-700 font-medium mt-1 '>Fees:</p>
+                  <p className='text-xs'>{currencySymbol} {item.amount}</p>
+                </div>
+                <div className='flex-1 text-sm text-zinc-600'>
+                  <p className='text-zinc-700 font-medium mt-1'>Booked Date & Time:</p>
+                  <p className='text-xs'>{item.bookedDate ? `${slotDateFormat(item.bookedDate)} | ${item.bookedTime}` : 'Not Available'}</p> 
+                  <p className='text-zinc-700 font-medium mt-1'>Appointment Date & Time:</p>
+                  <p className='text-xs'>{slotDateFormat(item.slotDate)} | {item.slotTime}</p> 
+                  <p className='text-zinc-700 font-medium mt-1'>Completed Date & Time:</p>
+                  <p className='text-xs'>{item.completedDate ? `${slotDateFormat(item.completedDate)} | ${item.completedTime}` : 'Not Completed'}</p>
+                </div>
               </div>
               <div></div>
               <div className='flex flex-col gap-2 justify-end'>

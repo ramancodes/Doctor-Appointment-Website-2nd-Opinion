@@ -31,6 +31,10 @@ const NavBar = () => {
                 <li className='py-1'>ALL DOCTORS</li>
                 <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
             </NavLink>
+            <NavLink to={'/second-opinion'}>
+                <li className='py-1'>GET A SECOND OPINION</li>
+                <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
+            </NavLink>
             <NavLink to={'/about'}>
                 <li className='py-1'>ABOUT</li>
                 <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
@@ -68,6 +72,7 @@ const NavBar = () => {
                 <ul className='flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium'>
                     <NavLink to='/' onClick={()=>setShowMenu(false)}><p className='px-4 py-2 rounded inline-block'>Home</p></NavLink>
                     <NavLink to='/doctors' onClick={()=>setShowMenu(false)} ><p className='px-4 py-2 rounded inline-block'>All Doctors</p></NavLink>
+                    <NavLink to='/second-opinion' onClick={()=>setShowMenu(false)} ><p className='px-4 py-2 rounded inline-block'>GET A SECOND OPINION</p></NavLink>
                     <NavLink to='/about' onClick={()=>setShowMenu(false)} ><p className='px-4 py-2 rounded inline-block'>About</p></NavLink>
                     <NavLink to='/contact' onClick={()=>setShowMenu(false)} ><p className='px-4 py-2 rounded inline-block'>Contact</p></NavLink>
                 </ul>

@@ -53,9 +53,10 @@ const AddSymptom = () => {
                 <div className='flex items-center gap-4 text-gray-500 px-4'>
                 <p>Department Name</p>
                 <select onChange={(e)=>setDepId(e.target.value)} value={depId} className='border rounded px-3 py-2' name="" id="">
-                  {departments.map((item, index)=>(
-                      <option key={index} value={item.speciality}>{item.speciality}</option>
-                  ))}
+                    <option value="">Not Selected</option>
+                    {departments.map((item, index)=>(
+                        <option key={index} value={item.speciality}>{item.speciality}</option>
+                    ))}
                 </select>
                 </div>
 
