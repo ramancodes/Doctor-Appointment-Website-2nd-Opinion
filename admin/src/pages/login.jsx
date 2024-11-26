@@ -14,6 +14,31 @@ const login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    // const isTokenExpired = (token) => {
+    //     if (!token) return true;
+    //     try {
+    //         const decodedToken = jwtDecode(token);
+    //         const currentTime = Date.now() / 1000;
+    //         return decodedToken.exp < currentTime;
+    //     } catch (error) {
+    //         console.error('Error decoding token:', error);
+    //         return true;
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     if (localStorage.getItem('token')) {
+    //       const token = localStorage.getItem('token');
+    //       if (isTokenExpired(token)) {
+    //         localStorage.removeItem('token');
+    //         setToken(false)
+    //         navigate('/login');
+    //       }
+    //     } else {
+    //         navigate('/login');
+    //     }
+    //   }, [token]);
+
     const onSubmitHandler = async (event)=>{
         event.preventDefault()
 

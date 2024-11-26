@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {NavLink, useNavigate} from 'react-router-dom'
 import { AppContext } from '../context/AppContext';
+import {jwtDecode} from 'jwt-decode';
 
 const NavBar = () => {
     const logo = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732230244/logo_zeknik.svg'
     const menu_icon = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732231732/menu_icon_djs1ts.svg'
     const cross_icon = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732231731/cross_icon_fkqsbh.svg'
     const dropdown_icon = 'https://res.cloudinary.com/dspuitf5t/image/upload/v1732231809/dropdown_icon_losvao.svg'
-
 
     const navigate = useNavigate();
 
@@ -20,6 +20,32 @@ const NavBar = () => {
         navigate('/')
     }
 
+    const isTokenExpired = (token) => {
+        if (!token) return true;
+        try {
+            const decodedToken = jwtDecode(token);
+            const currentTime = Date.now() / 1000;
+            return decodedToken.exp < currentTime;
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return true;
+        }
+    }
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+          const token = localStorage.getItem('token');
+          if (isTokenExpired(token)) {
+            localStorage.removeItem('token');
+            setToken(false)
+            navigate('/login');
+          }
+        } else {
+            navigate('/login');
+        }
+      }, [token]);
+
+    
   return (
     <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400'>
         <img onClick={()=>navigate('/')} className='w-40 cursor-pointer' src={logo} alt="" />
@@ -33,7 +59,7 @@ const NavBar = () => {
                 <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
             </NavLink>
             <NavLink to={'/second-opinion'}>
-                <li className='py-1'>GET A SECOND OPINION</li>
+                <li className='py-1'>GET SECOND OPINION</li>
                 <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
             </NavLink>
             <NavLink to={'/about'}>
@@ -73,7 +99,7 @@ const NavBar = () => {
                 <ul className='flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium'>
                     <NavLink to='/' onClick={()=>setShowMenu(false)}><p className='px-4 py-2 rounded inline-block'>Home</p></NavLink>
                     <NavLink to='/doctors' onClick={()=>setShowMenu(false)} ><p className='px-4 py-2 rounded inline-block'>All Doctors</p></NavLink>
-                    <NavLink to='/second-opinion' onClick={()=>setShowMenu(false)} ><p className='px-4 py-2 rounded inline-block'>GET A SECOND OPINION</p></NavLink>
+                    <NavLink to='/second-opinion' onClick={()=>setShowMenu(false)} ><p className='px-4 py-2 rounded inline-block'>Get Second Opinion</p></NavLink>
                     <NavLink to='/about' onClick={()=>setShowMenu(false)} ><p className='px-4 py-2 rounded inline-block'>About</p></NavLink>
                     <NavLink to='/contact' onClick={()=>setShowMenu(false)} ><p className='px-4 py-2 rounded inline-block'>Contact</p></NavLink>
                 </ul>
