@@ -24,9 +24,9 @@ const DoctorsList = () => {
                 <div className='p-4'>
                   <p className='text-neutral-800 text-lg font-medium'>{item.name}</p>
                   <p className='text-zinc-600 text-sm'>{item.speciality}</p>
+                  <p className='text-zinc-500 text-sm mb-2 font-medium'>{item.email}</p>
                   <p className='text-zinc-600 text-sm'>Degree:<span className='px-2 text-zinc-500'>{item.degree}</span></p>
                   <p className='text-zinc-600 text-sm'>Experience:<span className='px-2 text-zinc-500'>{item.experience}</span></p>
-                  <p className='text-zinc-600 text-sm'>Contact:<span className='px-2 text-zinc-500'>{item.email}</span></p>
                   <p className='text-zinc-600 text-sm'>Fees:<span className='px-2 text-zinc-500'>{currency} {item.fees}</span></p>
                   <div className='flex'>
                     <p className='text-zinc-600 text-sm'>Address:</p>

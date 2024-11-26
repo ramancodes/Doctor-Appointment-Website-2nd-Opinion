@@ -21,6 +21,11 @@ const changeAvailability = async (req, res)=>{
     }
 }
 
+// API to change date availability
+const changeDateAvailability = async (req, res)=>{
+    
+}
+
 const doctorsList = async (req, res)=>{
     try{
         const doctors = await doctorModel.find({}).select(['-password, -email'])

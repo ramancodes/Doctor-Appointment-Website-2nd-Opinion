@@ -134,7 +134,7 @@ const SecondOpinionDocApp = () => {
 
                     <div className='flex-1 flex flex-col gap-1'>
                         <p className='text-lg py-2'>Select Symptoms</p>
-                        <div className='flex gap-4'>
+                        <div className='flex flex-wrap gap-4'>
                             {
                                 filterSymptom[0]
                                 ? filterSymptom.map((item, index)=>(

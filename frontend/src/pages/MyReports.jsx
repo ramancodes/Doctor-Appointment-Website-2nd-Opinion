@@ -130,14 +130,19 @@ useEffect(()=>{
                 <div className='flex gap-2 w-full items-start'>
                   <div className='flex-1 text-sm text-zinc-600'>
                     <p className='text-neutral-800 font-semibold'>{item.docData.name}</p>
-                    <p>{item.docData.speciality}</p>
+                    <p className='text-sm'>{item.docData.speciality}</p>
                     <p className='text-zinc-700 font-medium mt-1 '>Address:</p>
-                    <p className='text-xs'>{item.docData.address.line1}</p>
-                    <p className='text-xs'>{item.docData.address.line2}</p>
+                    <p className='text-sm'>{item.docData.address.line1}</p>
+                    <p className='text-sm'>{item.docData.address.line2}</p>
                     <p className='text-zinc-700 font-medium mt-1'>User Symptoms</p>
-                    <p className='flex flex-wrap w-max text-xs text-gray-400 pr-2 py-1'>{item.symptoms}</p>
-                    <p className='text-zinc-700 font-medium mt-1 '>Fees:</p>
-                    <p className='text-xs'>{currencySymbol} {item.amount}</p>
+                    <div className='flex flex-wrap'>
+                      {
+                        item.symptoms.map((itm, idx)=>(
+                          <p key={idx} className='text-sm text-gray-500 pr-1 py-1 border-b'>{itm},</p> 
+                        ))
+                      }
+                    </div>
+                    <p className='text-zinc-700 font-medium mt-1 text-sm'>Fees: {currencySymbol} {item.amount}</p>
                   </div>
                   <div className='flex-1 text-sm text-zinc-600'>
                     <p className='text-zinc-700 font-medium mt-1'>Download Report</p>
@@ -146,12 +151,12 @@ useEffect(()=>{
                     {item.doctorReport && item.payment &&  <button className='text-xs border border-gray-2 rounded-full px-2 py-1 mt-2 hover:bg-primary hover:text-white' onClick={()=>downloadFile(item.doctorReport)}>Download</button>}
                   </div>
                   <div className='flex-1 text-sm text-zinc-600'>
-                    <p className='text-zinc-700 font-medium mt-1'>Applied Date & Time:</p>
-                    <p className='text-xs'>{item.appliedDate ? `${slotDateFormat(item.appliedDate)} | ${item.appliedTime}` : 'Not Available'}</p> 
-                    <p className='text-zinc-700 font-medium mt-1'>Accepted Date & Time:</p>
-                    <p className='text-xs'>{item.acceptedDate ? `${slotDateFormat(item.acceptedDate)} | ${item.acceptedTime}` : 'Not Accepted'}</p> 
-                    <p className='text-zinc-700 font-medium mt-1'>Completed Date & Time:</p>
-                    <p className='text-xs'>{item.completedDate ? `${slotDateFormat(item.completedDate)} | ${item.completedTime}` : 'Not Completed'}</p>
+                    <p className='text-zinc-700 font-medium mt-2'>Applied Date & Time:</p>
+                    <p className='text-sm'>{item.appliedDate ? `${slotDateFormat(item.appliedDate)} | ${item.appliedTime}` : 'Not Available'}</p> 
+                    <p className='text-zinc-700 font-medium mt-2'>Accepted Date & Time:</p>
+                    <p className='text-sm'>{item.acceptedDate ? `${slotDateFormat(item.acceptedDate)} | ${item.acceptedTime}` : 'Not Accepted'}</p> 
+                    <p className='text-zinc-700 font-medium mt-2'>Completed Date & Time:</p>
+                    <p className='text-sm'>{item.completedDate ? `${slotDateFormat(item.completedDate)} | ${item.completedTime}` : 'Not Completed'}</p>
                   </div>
                 </div>
                 <div></div>
@@ -172,21 +177,28 @@ useEffect(()=>{
                   <div className='flex-1 text-sm text-zinc-600'>
                     <p className='text-neutral-800 font-semibold'>'Not Accepted'</p>
                     <p className='text-zinc-700 font-medium mt-1'>Department</p>
-                    <p className='w-max text-xs text-gray-400 pr-2 py-1'>{item.speciality}</p>
+                    <p className='w-max text-sm text-gray-500 pr-2 py-1'>{item.speciality}</p>
                     <p className='text-zinc-700 font-medium mt-1'>Symptoms</p>
-                    <p className='flex flex-wrap w-max text-xs text-gray-400 pr-2 py-1'>{item.symptoms}</p> 
+                    <div className='flex flex-wrap'>
+                      {
+                        item.symptoms.map((itm, idx)=>(
+                          <p key={idx} className='text-sm text-gray-500 pr-1 py-1 border-b'>{itm},</p> 
+                        ))
+                      }
+                    </div>
+                    
                   </div>
                   <div className='flex-1 text-sm text-zinc-600'>
                     <p className='text-zinc-700 font-medium mt-1'>Download Report</p>
                     <button className='text-xs border border-gray-2 rounded-full px-2 py-1 mt-2 hover:bg-primary hover:text-white' onClick={()=>downloadFile(item.report)}>Download</button>
                   </div>
                   <div className='flex-1 text-sm text-zinc-600'>
-                    <p className='text-zinc-700 font-medium mt-1'>Applied Date & Time:</p>
-                    <p className='text-xs'>{item.appliedDate ? `${slotDateFormat(item.appliedDate)} | ${item.appliedTime}` : 'Not Available'}</p> 
-                    <p className='text-zinc-700 font-medium mt-1'>Accepted Date & Time:</p>
-                    <p className='text-xs'>{item.acceptedDate ? `${slotDateFormat(item.acceptedDate)} | ${item.acceptedTime}` : 'Not Accepted'}</p> 
-                    <p className='text-zinc-700 font-medium mt-1'>Completed Date & Time:</p>
-                    <p className='text-xs'>{item.completedDate ? `${slotDateFormat(item.completedDate)} | ${item.completedTime}` : 'Not Completed'}</p>
+                    <p className='text-zinc-700 font-medium mt-2'>Applied Date & Time:</p>
+                    <p className='text-sm'>{item.appliedDate ? `${slotDateFormat(item.appliedDate)} | ${item.appliedTime}` : 'Not Available'}</p> 
+                    <p className='text-zinc-700 font-medium mt-2'>Accepted Date & Time:</p>
+                    <p className='text-sm'>{item.acceptedDate ? `${slotDateFormat(item.acceptedDate)} | ${item.acceptedTime}` : 'Not Accepted'}</p> 
+                    <p className='text-zinc-700 font-medium mt-2'>Completed Date & Time:</p>
+                    <p className='text-sm'>{item.completedDate ? `${slotDateFormat(item.completedDate)} | ${item.completedTime}` : 'Not Completed'}</p>
                   </div>
                 </div>
                 <div></div>

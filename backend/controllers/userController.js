@@ -265,6 +265,8 @@ const bookSecondOpinionAppointment = async (req, res)=>{
         const currentDate = date.getDate()+"_"+(date.getMonth()+1)+"_"+date.getFullYear()
         const currentTime = hour+":"+date.getMinutes()+" "+am_pm
 
+        const symptoms = userSymptoms.split(',')
+
         const userData = await userModel.findById(userId).select('-password')
 
         const reportData = {
@@ -272,7 +274,7 @@ const bookSecondOpinionAppointment = async (req, res)=>{
             report: reportUrl,
             userData,
             speciality: department,
-            symptoms: userSymptoms,
+            symptoms,
             appliedDate: currentDate,
             appliedTime: currentTime,
             userData,
