@@ -247,7 +247,7 @@ const bookSecondOpinionAppointment = async (req, res)=>{
         let reportUrl;
 
         if(reportFile){
-            // upload report to cloudinary
+            // upload report to cloudinary -> change to AWS S3
             const reportUpload = await cloudinary.uploader.upload(reportFile.path, {resource_type:'raw'})
             reportUrl = reportUpload.secure_url
         }
@@ -294,7 +294,8 @@ const bookSecondOpinionAppointment = async (req, res)=>{
 const listAppointment = async (req, res)=>{
     try {
         const { userId } = req.body
-        const appointments = await appointmentModel.find({userId})
+        const data = await appointmentModel.find({userId})
+        const appointments = data.reverse()
 
         res.json({success:true, appointments})
 
@@ -336,7 +337,8 @@ const cancelAppointment = async (req, res)=>{
 const listSecondOpinioReports = async (req, res)=>{
     try {
         const { userId } = req.body
-        const reports = await reportModel.find({userId})
+        const data = await reportModel.find({userId})
+        const reports = data.reverse()
 
         res.json({success:true, reports})
     } catch (error) {
@@ -374,8 +376,13 @@ const razorpayInstance = new razorpay({
 const paymentRazorpay = async (req, res)=>{
 
     try {
-        const {appointmentId} = req.body
-        const appointmentData = await appointmentModel.findById(appointmentId)
+        const {appointmentId, type} = req.body
+        let appointmentData = null
+        if(type==='appointment'){
+            appointmentData = await appointmentModel.findById(appointmentId)
+        } else {
+            appointmentData = await reportModel.findById(appointmentId)
+        }
 
         if(!appointmentData || appointmentData.cancelled){
             return res.json({success:false, message:"Appointment Cancelled or Not Found"})
@@ -403,11 +410,16 @@ const paymentRazorpay = async (req, res)=>{
 // API to verify payment of razerpay
 const verifyRazorpay = async (req, res)=>{
     try {
-        const {razorpay_order_id} = req.body
+        const {response, type} = req.body
+        const {razorpay_order_id} = response
         const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
 
         if(orderInfo.status==='paid'){
-            await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {payment:true})
+            if(type==='appointment'){
+                await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {payment:true})
+            } else {
+                await reportModel.findByIdAndUpdate(orderInfo.receipt, {payment:true})
+            }
             res.json({success:true, message:"Payment Successful"})
         } else {
             res.json({success:false, message:"Payment Failed"})

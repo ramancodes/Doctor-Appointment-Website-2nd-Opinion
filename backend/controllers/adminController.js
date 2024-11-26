@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import appointmentModel from '../models/appointmentModel.js'
 import userModel from '../models/userModel.js'
 import departmentModel from '../models/departmentModel.js'
+import reportModel from '../models/reportModel.js'
 
 
 const isStrongPassword = (password)=>{
@@ -120,11 +121,24 @@ const allUsers = async (req, res)=>{
     }
 }
 
-// API to get all appointment list
+// API to get all appointments list
 const appointmentsAdmin = async (req, res)=>{
     try {
-        const appointments = await appointmentModel.find({})
+        const data = await appointmentModel.find({})
+        const appointments = data.reverse()
         res.json({success:true, appointments})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+// API to get all reports list
+const reportsAdmin = async (req, res)=>{
+    try {
+        const data = await reportModel.find({})
+        const reports = data.reverse()
+        res.json({success:true, reports})
     } catch (error) {
         console.log(error);
         res.json({success:false, message:error.message})
@@ -154,6 +168,20 @@ const cancelAppointmentAdmin = async (req, res)=>{
     }
 }
 
+// API to cancel report
+const cancelReportAdmin = async (req, res)=>{
+    try {
+        const { reportId } = req.body
+
+        await reportModel.findByIdAndUpdate(reportId, {cancelled:true})
+
+        res.json({success:true, message:"Report Cancelled"})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
 // API to get dashboard data for admin panel
 const adminDashboard = async (req, res)=>{
     try {
@@ -161,14 +189,17 @@ const adminDashboard = async (req, res)=>{
         const doctors = await doctorModel.find({})
         const users = await userModel.find({})
         const appointments = await appointmentModel.find({})
+        const reports = await reportModel.find({})
         const departments = await departmentModel.find({})
 
         const dashData = {
             doctors: doctors.length,
             appointments: appointments.length,
+            reports: reports.length,
             patients: users.length,
             departments: departments.length,
-            latestAppointments: appointments.reverse().slice(0, 5)
+            latestAppointments: appointments.reverse().slice(0, 5),
+            latestReports: reports.reverse().slice(0, 5)
         }
 
         res.json({success:true, dashData})
@@ -364,5 +395,7 @@ export {
     removeDepartment,
     addSymptom,
     getSymptoms,
-    removeSymptom
+    removeSymptom,
+    reportsAdmin,
+    cancelReportAdmin
 }

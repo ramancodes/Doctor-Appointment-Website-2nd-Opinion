@@ -17,6 +17,7 @@ import DoctorProfile from './pages/Doctor/DoctorProfile.jsx';
 import DoctorReports from './pages/Doctor/DoctorReports.jsx';
 import UserList from './pages/Admin/UserList.jsx';
 import Departments from './pages/Admin/Departments.jsx';
+import AllReports from './pages/Admin/AllReports.jsx';
 
 const App = () => {
 
@@ -48,6 +49,7 @@ const App = () => {
           <Route path='/doctor-list' element={<DoctorsList />} />
           <Route path='/all-users' element={<UserList />} />
           <Route path='/departments' element={<Departments />} />
+          <Route path='/all-reports' element={<AllReports />} />
 
           {/* Doctor Routes */}
           <Route path='/doctor-dashboard' element={<DoctorDashboard />} />

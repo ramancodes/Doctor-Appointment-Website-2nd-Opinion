@@ -23,7 +23,7 @@ const MyAppointments = () => {
       const {data} = await axios.get(backendUrl+'/api/user/appointments', {headers:{token}})
 
       if(data.success){
-        setAppointments(data.appointments.reverse())
+        setAppointments(data.appointments)
         console.log(data.appointments);
       }
     } catch (error) {
@@ -51,6 +51,7 @@ const MyAppointments = () => {
   }
 
   const initPay = (order) => {
+    const type = 'appointment'
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -63,7 +64,7 @@ const MyAppointments = () => {
         console.log(response)
 
         try {
-          const {data} = await axios.post(backendUrl+'/api/user/verify-razorpay', response, {headers:{token}})
+          const {data} = await axios.post(backendUrl+'/api/user/verify-razorpay', {response, type}, {headers:{token}})
           if(data.success){
             getUserAppointments()
             navigate('/my-appointments')
@@ -83,7 +84,8 @@ const MyAppointments = () => {
 
   const appointmentRazorpay = async (appointmentId) => {
     try {
-      const {data} = await axios.post(backendUrl+'/api/user/payment-razorpay', {appointmentId}, {headers:{token}})
+      const type = 'appointment'
+      const {data} = await axios.post(backendUrl+'/api/user/payment-razorpay', {appointmentId, type}, {headers:{token}})
       if(data.success){
         console.log(data.order)
         initPay(data.order)

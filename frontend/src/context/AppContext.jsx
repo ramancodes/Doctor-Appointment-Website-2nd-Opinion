@@ -37,8 +37,7 @@ const AppContextProvider = (props)=>{
             const {data} = await axios.get(backendUrl+'/api/user/all-departments')
             if(data.success){
                 setDepartments(data.departments)
-                console.log(data.departments);
-                
+                // console.log(data.departments);
             }
             else{
                 toast.error(data.message)

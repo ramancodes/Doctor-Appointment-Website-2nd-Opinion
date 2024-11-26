@@ -9,6 +9,7 @@ const AdminContextProvider = (props) => {
     const [aToken, setAToken] = useState(localStorage.getItem('aToken')?localStorage.getItem('aToken'):'')
     const [doctors, setDoctors] = useState([])
     const [appointments, setAppointments] = useState([])
+    const [reports, setReports] = useState([])
     const [dashData, setDashData] = useState(false)
     const [users, setUsers] = useState([])
     const [departments, setDepartments] = useState([])
@@ -92,6 +93,24 @@ const AdminContextProvider = (props) => {
         }
     }
 
+    const getAllReports = async () => {
+        try {
+            
+            const {data} = await axios.get(backendUrl + '/api/admin/reports', {headers:{aToken}})
+
+            if(data.success){
+                setReports(data.reports)
+                console.log(data.reports);
+                
+            } else {
+                toast.error(data.message)
+            }
+
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     const cancelAppointment = async (appointmentId)=>{
 
         try {
@@ -99,6 +118,24 @@ const AdminContextProvider = (props) => {
             if(data.success){
                 toast.success(data.message)
                 getAllAppointments()
+                getDashData()
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+
+    }
+
+    const cancelReport = async (reportId)=>{
+
+        try {
+            const {data} = await axios.post(backendUrl + '/api/admin/cancel-report', {reportId}, {headers:{aToken}})
+            if(data.success){
+                toast.success(data.message)
+                getAllReports()
+                getDashData()
             } else {
                 toast.error(data.message)
             }
@@ -208,7 +245,10 @@ const AdminContextProvider = (props) => {
         departments, setDepartments,
         getAllDepartments,
         removeDepartment,
-        removeSymptom
+        removeSymptom,
+        reports, setReports,
+        getAllReports,
+        cancelReport
     }
 
 

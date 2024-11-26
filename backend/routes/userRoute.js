@@ -16,8 +16,8 @@ userRouter.post('/cancel-appointment', authUser, cancelAppointment)
 userRouter.post('/payment-razorpay', authUser, paymentRazorpay)
 userRouter.post('/verify-razorpay', authUser, verifyRazorpay)
 userRouter.post('/book-second-opinion-appointment', upload.single('file'), authUser, bookSecondOpinionAppointment)
-userRouter.post('/get-all-second-opinion-appointment', authUser, listSecondOpinioReports)
-userRouter.post('/cancel-second-opinion-appointment', authUser, cancelSecondOpinionReport)
+userRouter.get('/reports', authUser, listSecondOpinioReports)
+userRouter.post('/cancel-report', authUser, cancelSecondOpinionReport)
 
 
 export default userRouter
