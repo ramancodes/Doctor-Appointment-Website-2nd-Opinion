@@ -18,11 +18,37 @@ import DoctorReports from './pages/Doctor/DoctorReports.jsx';
 import UserList from './pages/Admin/UserList.jsx';
 import Departments from './pages/Admin/Departments.jsx';
 import AllReports from './pages/Admin/AllReports.jsx';
+import {jwtDecode} from 'jwt-decode';
+import { useEffect } from 'react';
 
 const App = () => {
 
   const {aToken} = useContext(AdminContext)
-  const {dToken} = useContext(DoctorContext)
+  const {dToken, setDToken} = useContext(DoctorContext)
+
+  const isTokenExpired = (token) => {
+    if (!token) return true;
+    try {
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        return decodedToken.exp < currentTime;
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        return true;
+    }
+}
+
+useEffect(() => {
+
+    if (localStorage.getItem('dToken')) {
+        const token = localStorage.getItem('dToken');
+        if (isTokenExpired(token)) {
+          localStorage.removeItem('dToken')
+          setDToken(false)
+        }
+      }
+    
+  }, [dToken]);
 
   return aToken || dToken ? (
     <div className='bg-[#F8F9FD]'>

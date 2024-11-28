@@ -40,8 +40,6 @@ const NavBar = () => {
             setToken(false)
             navigate('/login');
           }
-        } else {
-            navigate('/login');
         }
       }, [token]);
 

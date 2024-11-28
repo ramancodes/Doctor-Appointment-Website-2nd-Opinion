@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 import axios from 'axios'
@@ -19,6 +19,17 @@ const SecondOpinionDocApp = () => {
     const [reportFile, setReportFile] = useState(false)
     const [showInfo, setShowInfo] = useState(false)
 
+    const ref = useRef([]);
+
+    const Uncheck = () => {
+
+        console.log(ref.current.length)
+        for (let i = 0; i < ref.current.length; i++) {
+
+            ref.current[i].checked = false;
+        }
+    }
+
     
     const setValue = async (value, selectedIndex)=>{
         setDepartment(value)
@@ -28,6 +39,7 @@ const SecondOpinionDocApp = () => {
             setFilterSymptom(departments[selectedIndex-1].symptoms)
             setUserSymptoms([])
         }
+        Uncheck()
     }
     
     const addUserSymptoms = (symptom)=>{
@@ -139,7 +151,7 @@ const SecondOpinionDocApp = () => {
                                 filterSymptom[0]
                                 ? filterSymptom.map((item, index)=>(
                                     <label htmlFor={index} className='flex flex-wrap gap-2 border border-gray-2 rounded-full px-3 py-2 hover:scale-105 transition-all duration-200'>
-                                        <input onChange={(e)=>addUserSymptoms(e.target.value)} key={index} type="checkbox" className='px-3 py-2' value={item} name="" id={index}/>
+                                        <input ref={(element) => { ref.current[index] = element }} onChange={(e)=>addUserSymptoms(e.target.value)} key={index} type="checkbox" className='px-3 py-2' value={item} class="symptoms-checkbox" id={index}/>
                                         <p>{item}</p>
                                     </label>
                                 ))
